@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="NoBoxTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundMode">none</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeColor">@android:color/transparent</item>
+        <item name="hintTextAppearance">@style/NoBoxHintTextAppearance</item>
+    </style>
+
+    <style name="NoBoxHintTextAppearance" parent="TextAppearance.Design.Hint">
+        <item name="android:textColor">@color/teal</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingTop">-8dp</item>
+    </style>
+</resources>
