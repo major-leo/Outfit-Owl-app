@@ -22,39 +22,43 @@
             android:layout_height="match_parent"
             android:fillViewport="true"
             tools:context=".signUp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:gravity="center_horizontal"
+                android:orientation="vertical"
                 android:padding="24dp">
 
                 <TextView
+                    android:id="@+id/signupTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Sign Up"
-                    android:id="@+id/signupTitle"
-                    android:textSize="36sp"
                     android:textAlignment="center"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal"/>
+                    android:textColor="@color/teal"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
 
-                <ImageView
-                    android:id="@+id/profileImg"
-                    android:layout_width="match_parent"
+                <androidx.cardview.widget.CardView
+                    android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/baseline_account_circle_24"
-                    app:tint="@color/darkBlue" />
+                    app:cardCornerRadius="50dp">
+                    <ImageView
+                        android:id="@+id/profileImg"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/baseline_account_circle_24" />
 
-
+                </androidx.cardview.widget.CardView>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    style="@style/NoBoxTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:hintEnabled="false"
-                    style="@style/NoBoxTextInputLayout"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/displayName"
@@ -62,22 +66,22 @@
                         android:layout_height="50dp"
                         android:layout_marginTop="40dp"
                         android:background="@drawable/custom_textbar"
-                        android:drawableStart="@drawable/baseline_account_circle_24"
+                        android:drawableStart="@drawable/baseline_account_circle_24_black"
                         android:drawablePadding="8dp"
+                        android:hint="Display Name"
                         android:imeOptions="actionNext"
                         android:inputType="textNoSuggestions"
                         android:padding="8dp"
                         android:textColor="@color/black"
-                        android:textColorHighlight="@color/cardview_dark_background"
-                        android:hint="Display Name"/>
+                        android:textColorHighlight="@color/cardview_dark_background" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    style="@style/NoBoxTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/NoBoxTextInputLayout"
-                    app:hintEnabled="false"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/email"
@@ -85,22 +89,22 @@
                         android:layout_height="50dp"
                         android:background="@drawable/custom_textbar"
                         android:drawableStart="@drawable/baseline_email_24"
-                        android:drawableTint="@color/black"
                         android:drawablePadding="8dp"
+                        android:drawableTint="@color/black"
+                        android:hint="Email"
                         android:imeOptions="actionNext"
                         android:inputType="textEmailAddress"
                         android:padding="8dp"
                         android:textColor="@color/black"
-                        android:textColorHighlight="@color/cardview_dark_background"
-                        android:hint="Email"/>
+                        android:textColorHighlight="@color/cardview_dark_background" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    style="@style/NoBoxTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/NoBoxTextInputLayout"
-                    app:hintEnabled="false"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/username"
@@ -109,22 +113,22 @@
                         android:background="@drawable/custom_textbar"
                         android:drawableStart="@drawable/baseline_person_24"
                         android:drawablePadding="8dp"
+                        android:hint="@string/username"
                         android:imeOptions="actionNext"
                         android:inputType="textNoSuggestions"
                         android:padding="8dp"
                         android:textColor="@color/black"
-                        android:textColorHighlight="@color/cardview_dark_background"
-                        android:hint="@string/username"/>
+                        android:textColorHighlight="@color/cardview_dark_background" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    style="@style/NoBoxTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:endIconMode="password_toggle"
+                    android:layout_marginTop="10dp"
                     app:boxBackgroundMode="none"
-                    style="@style/NoBoxTextInputLayout"
-                    app:hintEnabled="false"
-                    android:layout_marginTop="10dp">
+                    app:endIconMode="password_toggle"
+                    app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/password"
@@ -133,21 +137,21 @@
                         android:background="@drawable/custom_textbar"
                         android:drawableStart="@drawable/baseline_lock_24"
                         android:drawablePadding="8dp"
+                        android:hint="@string/password"
                         android:inputType="textPassword"
                         android:padding="8dp"
                         android:textColor="@color/black"
-                        android:textColorHighlight="@color/cardview_dark_background"
-                        android:hint="@string/password"/>
+                        android:textColorHighlight="@color/cardview_dark_background" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:endIconMode="password_toggle"
+                    android:layout_marginTop="10dp"
                     app:boxBackgroundMode="none"
-                    app:hintEnabled="false"
-                    android:layout_marginTop="10dp">
+                    app:endIconMode="password_toggle"
+                    app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/confirmPassword"
@@ -156,23 +160,23 @@
                         android:background="@drawable/custom_textbar"
                         android:drawableStart="@drawable/baseline_lock_24"
                         android:drawablePadding="8dp"
+                        android:hint="Comfirm Password"
                         android:inputType="textPassword"
                         android:padding="8dp"
                         android:textColor="@color/black"
-                        android:textColorHighlight="@color/cardview_dark_background"
-                        android:hint="Comfirm Password"/>
+                        android:textColorHighlight="@color/cardview_dark_background" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
+                    android:id="@+id/signUpButton"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:id="@+id/signUpButton"
-                    android:text="Sign Up"
                     android:layout_marginTop="15dp"
-                    android:textSize="18sp"
                     android:backgroundTint="@color/teal"
-                    app:cornerRadius = "10dp" />
+                    android:text="Sign Up"
+                    android:textSize="18sp"
+                    app:cornerRadius="10dp" />
 
             </LinearLayout>
         </ScrollView>
