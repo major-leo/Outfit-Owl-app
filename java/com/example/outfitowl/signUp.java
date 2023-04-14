@@ -181,6 +181,8 @@ public class signUp extends AppCompatActivity {
                     password.setBackground(ContextCompat.getDrawable(signUp.this, R.drawable.custom_textbar));
                 }
 
+                String encodedEmail = encodeEmail(emailStr);
+
                 // Check if the username is unique
                 isUsernameUnique(usernameStr, new OnUniqueUsernameCheckListener() {
                     @Override
@@ -198,7 +200,7 @@ public class signUp extends AppCompatActivity {
                                         uploadImage(new Runnable() {
                                             @Override
                                             public void run() {
-                                                user user = new user(profilePicURL, usernameStr, emailStr, name);
+                                                user user = new user(profilePicURL, usernameStr, encodedEmail, name);
                                                 reference.child(usernameStr).setValue(user);
                                                 Intent intent = new Intent(signUp.this, Login.class);
                                                 startActivity(intent);
@@ -296,5 +298,13 @@ public class signUp extends AppCompatActivity {
             }
         });
 
+    }
+
+    public static String encodeEmail(String email) {
+        return email.replace(".", ",");
+    }
+
+    public static String decodeEmail(String encodedEmail) {
+        return encodedEmail.replace(",", ".");
     }
 }

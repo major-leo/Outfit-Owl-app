@@ -1,11 +1,18 @@
 package com.example.outfitowl;
 
+import static com.example.outfitowl.signUp.decodeEmail;
+import static com.example.outfitowl.signUp.encodeEmail;
+
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -69,7 +76,99 @@ public class Login extends AppCompatActivity {
         ForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Login.this, forgotPassword.class));
+                AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
+                View dialogViewForgot = getLayoutInflater().inflate(R.layout.dialog_forgotpassword, null);
+                View dialogViewUser = getLayoutInflater().inflate(R.layout.dialog_forgotusername, null);
+                EditText emailBox = dialogViewForgot.findViewById(R.id.emailBox);
+                TextView userInfo = dialogViewUser.findViewById(R.id.usernameInfo);
+
+                builder.setView(dialogViewForgot);
+                AlertDialog dialog = builder.create();
+
+                if(dialog.getWindow() != null){
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+
+                }
+                dialog.show();
+
+                dialog.findViewById(R.id.resetButton).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String userEmail = emailBox.getText().toString().trim();
+
+                        if(TextUtils.isEmpty(userEmail) &&  !Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()){
+                            Toast.makeText(Login.this,"Enter your registered email address", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        FirebaseAuth.getInstance().sendPasswordResetEmail(userEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    dialog.dismiss();
+                                    String encodedEmail = encodeEmail(userEmail);
+                                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("user");
+                                    Query checkUserDatabase = reference.orderByChild("email").equalTo(encodedEmail);
+                                    checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if(snapshot.exists()){
+                                                String getUsername = null;
+                                                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                                                    String eachEmail = userSnapshot.child("email").getValue(String.class);
+                                                    if (Objects.equals(eachEmail, encodedEmail)) {
+                                                        getUsername = userSnapshot.child("username").getValue(String.class);
+                                                        break;
+                                                    }
+                                                }
+
+                                                if (getUsername != null) {
+                                                    getUsername += " please check your email for a password reset link.";
+                                                    userInfo.setText(getUsername);
+                                                } else {
+                                                    Toast.makeText(Login.this, "Username does not exist", Toast.LENGTH_SHORT).show();
+                                                }
+                                                userInfo.setText(getUsername);
+                                                builder.setView(dialogViewUser);
+                                                AlertDialog dialog = builder.create();
+
+                                                if(dialog.getWindow() != null){
+                                                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+
+                                                }
+                                                dialog.show();
+
+                                                dialog.findViewById(R.id.okButton).setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        dialog.dismiss();
+                                                    }
+                                                });
+                                            }else{
+                                                Toast.makeText(Login.this,"Username does not exist", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+                                }else{
+                                    Toast.makeText(Login.this,"Unable to send reset link", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+                    }
+                });
+
+                dialogViewForgot.findViewById(R.id.cancelButton).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
             }
         });
 
@@ -114,7 +213,8 @@ public class Login extends AppCompatActivity {
                         Toast.makeText(Login.this, "Email address does not exist.", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    FirebaseAuth.getInstance().signInWithEmailAndPassword(userEmail, userPassword)
+                    String decodeEmail = decodeEmail(userEmail);
+                    FirebaseAuth.getInstance().signInWithEmailAndPassword(decodeEmail, userPassword)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
