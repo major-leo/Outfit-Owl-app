@@ -146,29 +146,39 @@ public class signUp extends AppCompatActivity {
                     Toast.makeText(signUp.this,"Passwords need to match", Toast.LENGTH_SHORT).show();
                     confirmPassword.setBackground(ContextCompat.getDrawable(signUp.this, R.drawable.custom_textbar_error));
                     return;
+                }else{
+                    confirmPassword.setBackground(ContextCompat.getDrawable(signUp.this, R.drawable.custom_textbar));
                 }
 
                 if (name.isEmpty()){
                     Toast.makeText(signUp.this,"Display name cannot be empty", Toast.LENGTH_SHORT).show();
                     displayName.setBackground(ContextCompat.getDrawable(signUp.this, R.drawable.custom_textbar_error));
                     return;
+                }else{
+                    displayName.setBackground(ContextCompat.getDrawable(signUp.this, R.drawable.custom_textbar));
                 }
 
                 if (emailStr.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(emailStr).matches()){
                     Toast.makeText(signUp.this,"Email must be in valid email format", Toast.LENGTH_SHORT).show();
                     email.setBackground(ContextCompat.getDrawable(signUp.this, R.drawable.custom_textbar_error));
                     return;
+                }else{
+                    email.setBackground(ContextCompat.getDrawable(signUp.this, R.drawable.custom_textbar));
                 }
 
                 if (usernameStr.isEmpty()){
                     Toast.makeText(signUp.this,"Username cannot be empty", Toast.LENGTH_SHORT).show();
                     username.setBackground(ContextCompat.getDrawable(signUp.this, R.drawable.custom_textbar_error));
                     return;
+                }else{
+                    username.setBackground(ContextCompat.getDrawable(signUp.this, R.drawable.custom_textbar));
                 }
                 if (passwordStr.isEmpty() || passwordStr.length() < 6){
                     Toast.makeText(signUp.this,"Password cannot be empty", Toast.LENGTH_SHORT).show();
                     password.setBackground(ContextCompat.getDrawable(signUp.this, R.drawable.custom_textbar_error));
                     return;
+                }else{
+                    password.setBackground(ContextCompat.getDrawable(signUp.this, R.drawable.custom_textbar));
                 }
 
                 // Check if the username is unique
@@ -180,6 +190,7 @@ public class signUp extends AppCompatActivity {
                             username.setBackground(ContextCompat.getDrawable(signUp.this, R.drawable.custom_textbar_error));
                         }else{
                             // Sign up user with FirebaseAuth
+                            username.setBackground(ContextCompat.getDrawable(signUp.this, R.drawable.custom_textbar));
                             FirebaseAuth.getInstance().createUserWithEmailAndPassword(emailStr, passwordStr).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
