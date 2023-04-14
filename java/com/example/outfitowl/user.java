@@ -2,7 +2,7 @@ package com.example.outfitowl;
 
 public class user {
 
-    private String profilePic, displayName, email, username, password;
+    private String profilePic, displayName, email, username;
 
     public String getProfilePic() {
         return profilePic;
@@ -36,20 +36,11 @@ public class user {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public user(String profilePic, String username, String email, String displayName, String password) {
+    public user(String profilePic, String username, String email, String displayName) {
         this.profilePic = profilePic;
         this.displayName = displayName;
         this.email = email;
         this.username = username;
-        this.password = password;
     }
 
     public user() {
