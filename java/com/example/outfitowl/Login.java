@@ -38,6 +38,7 @@ import java.util.Objects;
 
 public class Login extends AppCompatActivity {
 
+    // Declare variables
     private EditText Username;
     private EditText Password;
     private Button LoginButton;
@@ -49,6 +50,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Initializes user input components
         Username = findViewById(R.id.username);
         Password = findViewById(R.id.password);
         LoginButton = findViewById(R.id.loginButton);
@@ -56,7 +58,9 @@ public class Login extends AppCompatActivity {
         LoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // If either the username or password is invalid, do not proceed with login
                 if (validateUsername() || validatePassword()){
+                    //check if user exists
                     checkUser();
                 }
             }
@@ -65,6 +69,7 @@ public class Login extends AppCompatActivity {
         SignUp = findViewById(R.id.signupText);
 
         SignUp.setOnClickListener(new View.OnClickListener() {
+            //navigate to sign up if the the signup text is clicked
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Login.this, signUp.class));
@@ -76,15 +81,21 @@ public class Login extends AppCompatActivity {
         ForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Create an AlertDialog
                 AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
+                // Get the dialog layout for the "forgot password" screen
                 View dialogViewForgot = getLayoutInflater().inflate(R.layout.dialog_forgotpassword, null);
+                // Get the dialog layout for the "forgot username" screen
                 View dialogViewUser = getLayoutInflater().inflate(R.layout.dialog_forgotusername, null);
+
                 EditText emailBox = dialogViewForgot.findViewById(R.id.emailBox);
                 TextView userInfo = dialogViewUser.findViewById(R.id.usernameInfo);
 
+                // create and show dialog box
                 builder.setView(dialogViewForgot);
                 AlertDialog dialog = builder.create();
 
+                //check if dialog is active and set the background to be transparent
                 if(dialog.getWindow() != null){
                     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
 
@@ -96,15 +107,18 @@ public class Login extends AppCompatActivity {
                     public void onClick(View v) {
                         String userEmail = emailBox.getText().toString().trim();
 
+                        // Check if the email entered is valid
                         if(TextUtils.isEmpty(userEmail) &&  !Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()){
                             Toast.makeText(Login.this,"Enter your registered email address", Toast.LENGTH_SHORT).show();
                             return;
                         }
+                        // Send password reset email
                         FirebaseAuth.getInstance().sendPasswordResetEmail(userEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful()){
                                     dialog.dismiss();
+                                    //if reset password link has been sent get the user's email
                                     String encodedEmail = encodeEmail(userEmail);
                                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("user");
                                     Query checkUserDatabase = reference.orderByChild("email").equalTo(encodedEmail);
@@ -114,6 +128,7 @@ public class Login extends AppCompatActivity {
                                             if(snapshot.exists()){
                                                 String getUsername = null;
                                                 for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                                                    //find the email that matches the user's email from the database and check the username of that user
                                                     String eachEmail = userSnapshot.child("email").getValue(String.class);
                                                     if (Objects.equals(eachEmail, encodedEmail)) {
                                                         getUsername = userSnapshot.child("username").getValue(String.class);
@@ -122,12 +137,15 @@ public class Login extends AppCompatActivity {
                                                 }
 
                                                 if (getUsername != null) {
+                                                    //return the username of the user in text view
                                                     getUsername += " please check your email for a password reset link.";
                                                     userInfo.setText(getUsername);
                                                 } else {
                                                     Toast.makeText(Login.this, "Username does not exist", Toast.LENGTH_SHORT).show();
                                                 }
                                                 userInfo.setText(getUsername);
+
+                                                //create a dialog box to show the username of the user
                                                 builder.setView(dialogViewUser);
                                                 AlertDialog dialog = builder.create();
 
@@ -137,6 +155,7 @@ public class Login extends AppCompatActivity {
                                                 }
                                                 dialog.show();
 
+                                                //if the user clicks ok dismiss dialog
                                                 dialog.findViewById(R.id.okButton).setOnClickListener(new View.OnClickListener() {
                                                     @Override
                                                     public void onClick(View v) {
@@ -175,6 +194,7 @@ public class Login extends AppCompatActivity {
     }
 
     private Boolean validateUsername(){
+        //checks if the username is valid
         String val = Username.getText().toString();
         if(val.isEmpty()){
             Toast.makeText(Login.this,"Username cannot be empty", Toast.LENGTH_SHORT).show();
@@ -187,6 +207,7 @@ public class Login extends AppCompatActivity {
     }
 
     private Boolean validatePassword(){
+        //checks if password is valid
         String val = Password.getText().toString();
         if(val.isEmpty()){
             Toast.makeText(Login.this,"Password cannot be empty", Toast.LENGTH_SHORT).show();
@@ -198,15 +219,18 @@ public class Login extends AppCompatActivity {
     }
 
     private void checkUser(){
+        //get user inputs
         String userUsername = Username.getText().toString().trim();
         String userPassword = Password.getText().toString().trim();
 
+        //get the database path user
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("user");
         Query checkUserDatabase = reference.orderByChild("username").equalTo(userUsername);
         checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
+                    //if data exists get the user's email
                     Username.setBackground(ContextCompat.getDrawable(Login.this, R.drawable.custom_textbar));
                     String userEmail = snapshot.child(userUsername).child("email").getValue(String.class);
                     if (userEmail == null){
@@ -214,6 +238,7 @@ public class Login extends AppCompatActivity {
                         return;
                     }
                     String decodeEmail = decodeEmail(userEmail);
+                    //sign in with email and username
                     FirebaseAuth.getInstance().signInWithEmailAndPassword(decodeEmail, userPassword)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -222,6 +247,7 @@ public class Login extends AppCompatActivity {
                                         Password.setBackground(ContextCompat.getDrawable(Login.this, R.drawable.custom_textbar));
                                         // Sign in success
                                         Toast.makeText(Login.this, "Login successful.", Toast.LENGTH_SHORT).show();
+                                        //navigate to the main page
                                         startActivity(new Intent(Login.this, wardrobe.class));
                                     }else{
                                         // Sign in fails

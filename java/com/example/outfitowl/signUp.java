@@ -135,9 +135,9 @@ public class signUp extends AppCompatActivity {
                 reference = database.getReference("user");
 
                 // Get user input from EditTexts
-                String name = displayName.getText().toString();
-                String emailStr = email.getText().toString();
-                String usernameStr = username.getText().toString();
+                String name = displayName.getText().toString().trim();
+                String emailStr = email.getText().toString().trim();
+                String usernameStr = username.getText().toString().trim();
                 String passwordStr = password.getText().toString();
                 String confirmPasswordStr = confirmPassword.getText().toString();
 
@@ -166,8 +166,8 @@ public class signUp extends AppCompatActivity {
                     email.setBackground(ContextCompat.getDrawable(signUp.this, R.drawable.custom_textbar));
                 }
 
-                if (usernameStr.isEmpty()){
-                    Toast.makeText(signUp.this,"Username cannot be empty", Toast.LENGTH_SHORT).show();
+                if (usernameStr.isEmpty()|| usernameStr.contains(" ")){
+                    Toast.makeText(signUp.this,"Username cannot be empty or contain spaces", Toast.LENGTH_SHORT).show();
                     username.setBackground(ContextCompat.getDrawable(signUp.this, R.drawable.custom_textbar_error));
                     return;
                 }else{
@@ -300,6 +300,7 @@ public class signUp extends AppCompatActivity {
 
     }
 
+    //emails need to be encoded as firebase does not allow '.' when re-pathing to get the data.
     public static String encodeEmail(String email) {
         return email.replace(".", ",");
     }
