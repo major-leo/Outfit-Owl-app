@@ -22,12 +22,12 @@
     <string name="upload">Upload</string>
 
     <string-array name="spinner_items">
+        <item>Others</item>
         <item>Tops</item>
         <item>Bottoms</item>
         <item>Shoes</item>
         <item>Outerwear</item>
         <item>Accessories</item>
-        <item>Others</item>
     </string-array>
 
 </resources>

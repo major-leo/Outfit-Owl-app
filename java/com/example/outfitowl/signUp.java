@@ -2,6 +2,7 @@ package com.example.outfitowl;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -293,9 +295,12 @@ public class signUp extends AppCompatActivity {
             return;
         }
 
-        ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Uploading...");
-        progressDialog.show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        ProgressBar progressBar = new ProgressBar(this);
+        builder.setView(progressBar);
+        builder.setCancelable(false);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
 
         FirebaseStorage.getInstance().getReference("profileImage/"+ UUID.randomUUID().toString()).putFile(imagePath).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -315,13 +320,13 @@ public class signUp extends AppCompatActivity {
                     Toast.makeText(signUp.this,"Image Uploaded failed", Toast.LENGTH_SHORT).show();
                 }
 
-                progressDialog.dismiss();
+                alertDialog.dismiss();
             }
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
                 double progress = 100.0 * snapshot.getBytesTransferred()/snapshot.getTotalByteCount();
-                progressDialog.setMessage("Uploaded "+(int) progress + "%");
+                progressBar.setProgress((int) progress);
             }
         });
 

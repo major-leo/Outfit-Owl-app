@@ -36,7 +36,8 @@
                     android:layout_height="341dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/clothes_rack"
-                    android:id="@+id/uploadImage"/>
+                    android:id="@+id/uploadImage"
+                    android:visibility="visible"/>
 
                 <ProgressBar
                     android:layout_width="100dp"
@@ -72,7 +73,9 @@
                     android:background="@drawable/custom_textbar"
                     android:backgroundTint="@color/white"
                     android:hint="@string/add_a_name"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"/>
 
             </RelativeLayout>
 
@@ -84,7 +87,7 @@
                 android:layout_marginTop="480dp"
                 android:background="@drawable/custom_spinner_drop"
                 android:textAlignment="center"
-                android:id="@+id/itemType"/>
+                android:id="@+id/itemType" />
 
             <Button
                 android:layout_width="match_parent"
