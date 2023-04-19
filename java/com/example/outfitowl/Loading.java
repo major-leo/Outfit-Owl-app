@@ -1,26 +1,29 @@
 package com.example.outfitowl;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.content.pm.PackageManager;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 public class Loading extends AppCompatActivity {
     //camera request code to see if permission has been granted
     private static final int CAMERA_PERMISSION_REQUEST_CODE = 100;
+    //storage request code to see if permission has been granted
+    private static final int STORAGE_PERMISSION_REQUEST_CODE = 102;
     //boolean to see if the reasoning box has been shown to the user
     private boolean showRationale = false;
     //counter for how many times the program has attempted to request for camera permission
     private int counter = 0;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

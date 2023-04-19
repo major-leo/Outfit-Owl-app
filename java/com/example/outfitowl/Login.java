@@ -3,11 +3,6 @@ package com.example.outfitowl;
 import static com.example.outfitowl.signUp.decodeEmail;
 import static com.example.outfitowl.signUp.encodeEmail;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -19,20 +14,25 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.auth.User;
-import com.google.firebase.ktx.Firebase;
 
 import java.util.Objects;
 
@@ -44,11 +44,17 @@ public class Login extends AppCompatActivity {
     private Button LoginButton;
     private TextView SignUp;
     private TextView ForgotPassword;
+    private FirebaseAuth authentication;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        FirebaseApp.initializeApp(this);
+        authentication = FirebaseAuth.getInstance();
 
         // Initializes user input components
         Username = findViewById(R.id.username);
@@ -191,6 +197,19 @@ public class Login extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // Check if the user is signed in (non-null)
+        FirebaseUser currentUser = authentication.getCurrentUser();
+        if (currentUser != null) {
+            // The user is signed in, proceed to the main part of the app
+            startActivity(new Intent(Login.this, wardrobe.class));
+            finish();
+        }
     }
 
     private Boolean validateUsername(){

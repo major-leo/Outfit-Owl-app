@@ -1,47 +1,48 @@
 package com.example.outfitowl;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.core.content.ContextCompat;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
-
-import android.util.Patterns;
-
-import java.io.IOException;
-import java.util.Objects;
-import java.util.UUID;
-
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.UploadTask;
+
+import java.io.IOException;
+import java.util.Objects;
+import java.util.UUID;
 
 public class signUp extends AppCompatActivity {
 
@@ -118,9 +119,19 @@ public class signUp extends AppCompatActivity {
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent photoIntent = new Intent(Intent.ACTION_PICK);
-                photoIntent.setType("image/*");
-                photoActivityResultLauncher.launch(photoIntent);
+                //checks if camera permissions exists
+                if (hasCameraPermission()) {
+                    ImagePicker.Companion.with(signUp.this)
+                            .crop()
+                            .compress(1024)
+                            .maxResultSize(1080,1080)
+                            .start();
+                }else{
+                    //otherwise only allow gallery uploads
+                    Intent photoIntent = new Intent(Intent.ACTION_PICK);
+                    photoIntent.setType("image/*");
+                    photoActivityResultLauncher.launch(photoIntent);
+                }
 
             }
         });
@@ -259,6 +270,22 @@ public class signUp extends AppCompatActivity {
         profilePic.setImageBitmap(bitmap);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK) {
+            // Get the Uri for the selected image
+            assert data != null;
+            imagePath = data.getData();
+            // Use the Uri to load the image
+            profilePic.setImageURI(imagePath);
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+            // Handle the error
+            Toast.makeText(this, ImagePicker.Companion.getError(data), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     // Method to upload the profile image to Firebase Storage
     private void uploadImage(Runnable onSuccess){
         if (imagePath == null) {
@@ -298,6 +325,11 @@ public class signUp extends AppCompatActivity {
             }
         });
 
+    }
+
+    //method to check if app has camera permissions
+    private boolean hasCameraPermission() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
     }
 
     //emails need to be encoded as firebase does not allow '.' when re-pathing to get the data.
