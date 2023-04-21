@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottom_wardrobe"
+        android:icon="@drawable/wardrobe"
+        android:title="Wardrobe"/>
+
+    <item
+        android:id="@+id/bottom_outfits"
+        android:icon="@drawable/tshirt"
+        android:title="Outfits"/>
+    <item
+        android:id="@+id/bottom_camera"
+        android:icon="@drawable/baseline_camera_24"
+        android:title="Camera"/>
+    <item
+        android:id="@+id/bottom_social"
+        android:icon="@drawable/baseline_people_24"
+        android:title="Social"/>
+
+    <item
+        android:id="@+id/bottom_profile"
+        android:icon="@drawable/baseline_person_pin_24"
+        android:title="Profile"/>
+
+
+</menu>

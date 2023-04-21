@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".camera">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomNavigationView"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/custom_textbar"
+                android:padding="20dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/navy">
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="341dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/clothes_rack"
+                    android:id="@+id/uploadImage"
+                    android:visibility="visible"/>
+
+                <ProgressBar
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="121dp"
+                    android:layout_marginTop="121dp"
+                    android:layout_marginEnd="15dp"
+                    android:indeterminateTint="@color/darkBlue"
+                    android:visibility="invisible"
+                    android:id="@+id/progressBar"/>
+
+
+            </RelativeLayout>
+
+
+
+            <EditText
+                android:id="@+id/itemName"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="410dp"
+                android:background="@drawable/custom_textbar"
+                android:hint="@string/add_a_name"
+                android:textAlignment="center"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:textColorHint ="@color/darkBlue"
+                android:textColor="@color/darkBlue"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="57dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="480dp"
+                android:background="@drawable/custom_spinner_drop"
+                android:textAlignment="center"
+                android:id="@+id/itemType" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginStart="17dp"
+                android:layout_marginTop="550dp"
+                android:layout_marginEnd="17dp"
+                android:id="@+id/uploadClothing"
+                android:text="@string/upload"
+                android:textSize="18sp"
+                android:backgroundTint="@color/teal"
+                app:cornerRadius = "20dp"/>
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottomNavigationView"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bottom_background"
+        android:elevation="2dp"
+        app:menu="@menu/bottom_menu"
+        app:itemIconSize="30dp"
+        app:itemIconTint="@drawable/item_selector"
+        app:itemRippleColor="@android:color/transparent"
+        app:itemBackground="@drawable/background_selector"
+        app:labelVisibilityMode="unlabeled"/>
+</RelativeLayout>

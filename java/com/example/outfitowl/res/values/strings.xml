@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Outfit Owl</string>
+    <string name="username">Username</string>
+    <string name="forgot_details">Forgot Details</string>
+    <string name="login">Login</string>
+    <string name="not_registered_sign_up">Not registered? Sign Up</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="email">Email</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="already_a_user_login">Already a user?Login</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="enter_your_email_address">Enter Your Email address:</string>
+    <string name="cancel">Cancel</string>
+    <string name="reset">Reset</string>
+    <string name="display_name">Display Name</string>
+    <string name="your_username_is">Your username is:</string>
+    <string name="please_check_your_email_for_a_password_reset_link">please check your email for a password reset link.</string>
+    <string name="ok">OK</string>
+    <string name="add_a_name">Add a name…</string>
+    <string name="upload">Upload</string>
+
+    <string-array name="spinner_items">
+        <item>Tops</item>
+        <item>Bottoms</item>
+        <item>Shoes</item>
+        <item>Outerwear</item>
+        <item>Accessories</item>
+        <item>Others</item>
+    </string-array>
+
+</resources>
