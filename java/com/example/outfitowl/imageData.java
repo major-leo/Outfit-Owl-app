@@ -1,7 +1,7 @@
 package com.example.outfitowl;
 
 public class imageData {
-    private String imageURL, itemName;
+    private String imageURL, itemName, itemType, itemKey;
 
     public imageData(){
 
@@ -23,9 +23,27 @@ public class imageData {
         this.itemName = itemName;
     }
 
+    public String getItemType() {
+        return itemType;
+    }
 
-    public imageData(String imageURL, String itemName) {
+    public void setItemType(String itemType) {
+        this.itemType = itemType;
+    }
+
+    public String getItemKey() {
+        return itemKey;
+    }
+
+    public void setItemKey(String itemKey) {
+        this.itemKey = itemKey;
+    }
+
+    public imageData(String imageURL, String itemName, String itemType, String itemKey) {
         this.imageURL = imageURL;
         this.itemName = itemName;
+        this.itemType = itemType;
+        this.itemKey = itemKey;
     }
+
 }

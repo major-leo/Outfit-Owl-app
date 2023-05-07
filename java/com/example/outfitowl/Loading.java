@@ -16,8 +16,6 @@ import androidx.core.app.ActivityCompat;
 public class Loading extends AppCompatActivity {
     //camera request code to see if permission has been granted
     private static final int CAMERA_PERMISSION_REQUEST_CODE = 100;
-    //storage request code to see if permission has been granted
-    private static final int STORAGE_PERMISSION_REQUEST_CODE = 102;
     //boolean to see if the reasoning box has been shown to the user
     private boolean showRationale = false;
     //counter for how many times the program has attempted to request for camera permission
@@ -81,7 +79,17 @@ public class Loading extends AppCompatActivity {
                     .create().show();
 
         } else {
-            requestCameraPermission();
+            if (counter < 3) {
+                //if user denies permission twice android no longer allows request
+                //increase counter for how many time the program attempts to show request
+                counter++;
+                requestCameraPermission();
+            } else {
+             //if the app has been prevented from asking for permission 3 times then the user has already denied permissions
+             //progress to login screen
+                Toast.makeText(this, "Camera Permission Denied", Toast.LENGTH_SHORT).show();
+                navigateToLoginActivity();
+            }
         }
     }
 
@@ -100,20 +108,8 @@ public class Loading extends AppCompatActivity {
                 if (showRationale) {
                     Toast.makeText(this, "Camera Permission Denied", Toast.LENGTH_SHORT).show();
                     navigateToLoginActivity();
-                } else {
-                    //if user denies permission twice android no longer allows request
-                    //increase counter for how many time the program attempts to show request
-                    counter += 1;
-                    showCameraPermissionExplanation();
                 }
             }
-        }
-
-        if(counter == 3){
-            //if the app has been prevented from asking for permission 3 times then the user has already denied permissions
-            //progress to login screen
-            Toast.makeText(this, "Camera Permission Denied", Toast.LENGTH_SHORT).show();
-            navigateToLoginActivity();
         }
     }
 }

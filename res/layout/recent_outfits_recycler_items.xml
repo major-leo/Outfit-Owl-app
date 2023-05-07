@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="125dp"
+        android:layout_height="160dp"
+        app:cardCornerRadius="20dp"
+        android:background="@color/darkBlue">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/darkBlue">
+
+            <ImageView
+                android:id="@+id/recyclerImageShoes"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/recyclerImageBottom"
+                android:scaleType="centerCrop"
+                android:src="@color/black" />
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:id="@+id/recyclerImageTop"
+                android:layout_marginBottom="5dp"
+                android:src="@color/teal"
+                android:scaleType="centerCrop"/>
+
+            <ImageView
+                android:id="@+id/recyclerImageBottom"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/recyclerImageTop"
+                android:layout_marginBottom="5dp"
+                android:scaleType="centerCrop"
+                android:src="@color/white" />
+
+            <TextView
+                android:id="@+id/recyclerCaption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="type"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:background="@drawable/bottom_background"
+                android:backgroundTint="@color/darkBlue"/>
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+</LinearLayout>

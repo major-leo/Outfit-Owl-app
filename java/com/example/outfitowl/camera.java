@@ -65,7 +65,6 @@ public class camera extends AppCompatActivity {
     private String userEmail = null;
     private String userName = null;
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("wardrobe");
-    private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     private BottomNavigationView bottomNavigationView;
 
     @Override
@@ -227,8 +226,11 @@ public class camera extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Uri> task) {
                             if(task.isSuccessful()){
                                 //if uploading image is successful upload data to firebase realtime database
-                                imageData ImageData = new imageData(task.getResult().toString(), name);
-                                databaseReference.child(userName).child(type).setValue(ImageData);
+                                String key = databaseReference.push().getKey();
+                                if (key != null) {
+                                    imageData ImageData = new imageData(task.getResult().toString(), name, type, key);
+                                    databaseReference.child(userName).child(key).setValue(ImageData);
+                                }
 
                             }
                         }

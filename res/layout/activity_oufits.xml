@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,21 +8,368 @@
     tools:context=".outfits">
 
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+<!--        <ScrollView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:layout_marginBottom="60dp"-->
+<!--            app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintVertical_bias="1.0"-->
+<!--            tools:layout_editor_absoluteX="0dp">-->
+
+<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content">-->
+
+                        <!-- Share FloatingActionButton -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="@color/teal"
+            android:src="@drawable/baseline_reply_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+        <!-- User Guide FloatingActionButton -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/userGuideOutfits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/teal"
+            android:src="@drawable/baseline_question_mark_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+        <!-- TextInputLayout -->
+
+        <ImageView
+            android:layout_width="119dp"
+            android:layout_height="119dp"
+            android:layout_marginTop="12dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/logo"
+            app:layout_constraintEnd_toStartOf="@+id/topCardView"
+            app:layout_constraintHorizontal_bias="0.518"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userGuideOutfits" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outfitNameOuter"
+            style="@style/NoBoxTextInputLayout"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/outfitName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_textbar"
+                    android:hint="Name"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:padding="8dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textColorHighlight="@color/cardview_dark_background"
+                    android:textColorHint="@color/darkBlue" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <!-- Wear Button -->
+        <Button
+            android:id="@+id/wearButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="@color/teal"
+            android:text="Wear"
+            android:textSize="18sp"
+            app:cornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/share" />
+
+        <!-- Top TextView -->
+        <TextView
+            android:id="@+id/topLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Top"
+            android:textAlignment="center"
+            android:textColor="@color/navy"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/outfitNameOuter" />
+
+        <!-- Top CardView -->
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/topCardView"
+            android:layout_width="119dp"
+            android:layout_height="119dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="20dp"
+            app:elevation="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/topLabel">
+                <com.denzcoskun.imageslider.ImageSlider
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/topsImageSlider"
+                    app:iss_auto_cycle="false"
+                    app:iss_corner_radius="20"
+                    app:iss_title_background="@drawable/gradient"
+                    app:iss_text_align="CENTER"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Bottom TextView -->
+        <TextView
+            android:id="@+id/bottomLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bottom"
+            android:textAlignment="center"
+            android:textColor="@color/navy"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/topCardView" />
+
+        <!-- Bottom CardView -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/bottomCardView"
+            android:layout_width="119dp"
+            android:layout_height="119dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="20dp"
+            app:elevation="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bottomLabel">
+                <com.denzcoskun.imageslider.ImageSlider
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/bottomImageSlider"
+                    app:iss_auto_cycle="false"
+                    app:iss_corner_radius="20"
+                    app:iss_title_background="@drawable/gradient"
+                    app:iss_text_align="CENTER"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- OuterWear TextView -->
+        <TextView
+            android:id="@+id/outerWearLabel"
+            android:layout_width="119dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="13.5dp"
+            android:text="OuterWear"
+            android:textAlignment="center"
+            android:textColor="@color/navy"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/outerWearCardView"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- OuterWear CardView -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/outerWearCardView"
+            android:layout_width="119dp"
+            android:layout_height="119dp"
+            android:layout_marginTop="220dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="20dp"
+            app:elevation="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/bottomCardView"
+            app:layout_constraintTop_toTopOf="parent">
+                <com.denzcoskun.imageslider.ImageSlider
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/outerWearImageSlider"
+                    app:iss_auto_cycle="false"
+                    app:iss_corner_radius="20"
+                    app:iss_title_background="@drawable/gradient"
+                    app:iss_text_align="CENTER"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Accessories TextView -->
+        <TextView
+            android:id="@+id/accessoriesLabel"
+            android:layout_width="119dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:text="Accessories"
+            android:textAlignment="center"
+            android:textColor="@color/navy"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/accessoriesCardView"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- Accessories CardView -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/accessoriesCardView"
+            android:layout_width="119dp"
+            android:layout_height="119dp"
+            android:layout_marginTop="220dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="20dp"
+            app:elevation="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/bottomCardView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+                <com.denzcoskun.imageslider.ImageSlider
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/accessoriesImageSlider"
+                    app:iss_auto_cycle="false"
+                    app:iss_corner_radius="20"
+                    app:iss_title_background="@drawable/gradient"
+                    app:iss_text_align="CENTER"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Shoes TextView -->
+        <TextView
+            android:id="@+id/shoesLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shoes"
+            android:textAlignment="center"
+            android:textColor="@color/navy"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bottomCardView" />
+
+        <!-- Shoes CardView -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/shoesCardView"
+            android:layout_width="119dp"
+            android:layout_height="119dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="20dp"
+            app:elevation="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shoesLabel">
+                <com.denzcoskun.imageslider.ImageSlider
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/shoesImageSlider"
+                    app:iss_auto_cycle="false"
+                    app:iss_corner_radius="20"
+                    app:iss_title_background="@drawable/gradient"
+                    app:iss_text_align="CENTER"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Others TextView -->
+        <TextView
+            android:id="@+id/othersLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Others"
+            android:textAlignment="center"
+            android:textColor="@color/navy"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/othersCardView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.651"
+            app:layout_constraintStart_toEndOf="@+id/shoesLabel"
+            app:layout_constraintTop_toBottomOf="@+id/outerWearCardView" />
+
+        <!-- Others CardView -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/othersCardView"
+            android:layout_width="119dp"
+            android:layout_height="119dp"
+            android:layout_marginTop="20dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="20dp"
+            app:elevation="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/shoesCardView"
+            app:layout_constraintTop_toBottomOf="@+id/outerWearCardView">
+                <com.denzcoskun.imageslider.ImageSlider
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/othersImageSlider"
+                    app:iss_auto_cycle="false"
+                    app:iss_corner_radius="20"
+                    app:iss_title_background="@drawable/gradient"
+                    app:iss_text_align="CENTER"/>
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/clearButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/navy"
+            android:text="Clear"
+            android:textSize="18sp"
+            app:cornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/shoesCardView"
+            app:layout_constraintEnd_toStartOf="@+id/shoesCardView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/accessoriesCardView" />
+
+        <TextView
+            android:id="@+id/outfits"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recent Outfits"
+            android:textAlignment="center"
+            android:textColor="@color/navy"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/shoesCardView" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/outfitRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/outfits"
+            tools:layout_editor_absoluteX="0dp" />
+
+<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--        </ScrollView>-->
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="20dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="30dp"
-        android:layout_marginTop="30dp"
         android:background="@drawable/bottom_background"
         android:elevation="2dp"
-        app:menu="@menu/bottom_menu"
+        app:itemBackground="@drawable/background_selector"
         app:itemIconSize="30dp"
         app:itemIconTint="@drawable/item_selector"
         app:itemRippleColor="@android:color/transparent"
-        app:itemBackground="@drawable/background_selector"
-        app:labelVisibilityMode="unlabeled"/>
-</RelativeLayout>
+        app:labelVisibilityMode="unlabeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_menu" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
